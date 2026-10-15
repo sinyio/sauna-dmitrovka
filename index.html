@@ -145,13 +145,14 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 .lb.open { display: block; }
 .lb img { position: absolute; inset: 64px 72px 72px; width: calc(100% - 144px); height: calc(100% - 136px); object-fit: contain; user-select: none; -webkit-user-drag: none; transition: opacity .2s; }
 .lb img.loading { opacity: .3; }
-.lb button { position: absolute; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 1px solid rgba(238, 230, 211, .2); border-radius: 50%; background: rgba(12, 24, 20, .6); color: inherit; cursor: pointer; }
+.lb button { position: absolute; z-index: 2; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 1px solid rgba(238, 230, 211, .2); border-radius: 50%; background: rgba(12, 24, 20, .6); color: inherit; cursor: pointer; }
 .lb button:hover { background: rgba(238, 230, 211, .12); }
+.lb button[hidden] { display: none; }
 .lb button svg { width: 22px; height: 22px; }
 .lb .lb-close { top: 16px; right: 16px; }
 .lb .lb-prev { left: 12px; top: 50%; translate: 0 -50%; }
 .lb .lb-next { right: 12px; top: 50%; translate: 0 -50%; }
-.lb-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 14px; padding: 22px; font-size: 15px; }
+.lb-bar { position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none; display: flex; justify-content: center; gap: 14px; padding: 22px; font-size: 15px; }
 .lb-bar b { font-weight: 700; color: #d9a441; }
 .lb-bar span { opacity: .7; }
 .lb-top { position: absolute; top: 28px; left: 24px; right: 84px; font: 500 18px/1 'Geologica'; }
