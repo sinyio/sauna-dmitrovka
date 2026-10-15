@@ -124,9 +124,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
 /* Отзывы */
 .reviews { padding-block: clamp(80px, 11vw, 160px); }
-.score { display: flex; align-items: baseline; gap: 18px; margin: 10px 0 50px; }
-.score b { font: 200 120px/.8 'Geologica'; color: var(--accent); letter-spacing: -.05em; }
-.quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.quotes { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .quotes figure { border-top: 1px solid var(--line); padding-top: 22px; }
 .quotes blockquote { font-size: 17px; }
 .quotes figcaption { margin-top: 14px; color: var(--accent); font-size: 14px; }
@@ -140,6 +138,23 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 .contact dt { color: var(--accent); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; padding-top: 3px; }
 .map { margin-top: 30px; height: 320px; border-radius: 8px; overflow: hidden; background: var(--deep); }
 .map iframe { width: 100%; height: 100%; border: 0; filter: var(--map-filter); }
+
+/* Просмотр фото на весь экран */
+[data-gallery] img { cursor: zoom-in; }
+.lb { position: fixed; inset: 0; z-index: 50; display: none; background: rgba(6, 12, 10, .94); color: #eee6d3; touch-action: pan-y; }
+.lb.open { display: block; }
+.lb img { position: absolute; inset: 64px 72px 72px; width: calc(100% - 144px); height: calc(100% - 136px); object-fit: contain; user-select: none; -webkit-user-drag: none; transition: opacity .2s; }
+.lb img.loading { opacity: .3; }
+.lb button { position: absolute; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 1px solid rgba(238, 230, 211, .2); border-radius: 50%; background: rgba(12, 24, 20, .6); color: inherit; cursor: pointer; }
+.lb button:hover { background: rgba(238, 230, 211, .12); }
+.lb button svg { width: 22px; height: 22px; }
+.lb .lb-close { top: 16px; right: 16px; }
+.lb .lb-prev { left: 12px; top: 50%; translate: 0 -50%; }
+.lb .lb-next { right: 12px; top: 50%; translate: 0 -50%; }
+.lb-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 14px; padding: 22px; font-size: 15px; }
+.lb-bar b { font-weight: 700; color: #d9a441; }
+.lb-bar span { opacity: .7; }
+.lb-top { position: absolute; top: 28px; left: 24px; right: 84px; font: 500 18px/1 'Geologica'; }
 
 @media (max-width: 900px) {
   .top nav { display: none; }
@@ -158,6 +173,8 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
   .theme { margin-left: auto; }
   .hero .btn { width: 100%; justify-content: center; }
   .contact dl div { grid-template-columns: 1fr; }
+  .lb img { inset: 72px 0 64px; width: 100%; height: calc(100% - 136px); }
+  .lb .lb-prev, .lb .lb-next { top: auto; bottom: 10px; translate: none; width: 44px; height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .clock .colon { animation: none; } html { scroll-behavior: auto; } }
 </style>
@@ -185,7 +202,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
       <a class="btn btn-ghost" href="#halls">Выбрать зал</a>
     </div>
   </div>
-  <figure>
+  <figure data-gallery="Зал 1">
     <img src="https://sauna.ru/uploads/sauna/53/halls/75/hall_tmb/banya-dmitrovke-zal1-006-4059-b24.webp" alt="Зал 1: бильярд и комната отдыха с кожаными диванами">
     <figcaption>от 2 200 ₽ в час</figcaption>
   </figure>
@@ -208,7 +225,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
   <article class="hall">
     <h3>Зал 1</h3>
-    <div class="shots">
+    <div class="shots" data-gallery="Зал 1">
       <img src="https://sauna.ru/uploads/sauna/53/halls/75/banya-dmitrovke-zal1-007-4060-yxw.jpg" alt="Зал 1: стол и диваны" loading="lazy">
       <img src="https://sauna.ru/uploads/sauna/53/halls/75/banya-dmitrovke-zal1-009-4062-bh8.jpg" alt="Зал 1: бильярд и массажное кресло" loading="lazy">
       <img src="https://sauna.ru/uploads/sauna/53/halls/75/banya-dmitrovke-zal1-010-4063-igj.jpg" alt="Зал 1: общий вид" loading="lazy">
@@ -223,7 +240,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
   <article class="hall">
     <h3>Зал 2</h3>
-    <div class="shots">
+    <div class="shots" data-gallery="Зал 2">
       <img src="https://sauna.ru/uploads/sauna/53/halls/76/hall_tmb/banya-dmitrovke-zal2-006-21036-2r7.jpg" alt="Зал 2: бильярдный стол" loading="lazy">
       <img src="https://sauna.ru/uploads/sauna/53/halls/76/hall_tmb/banya-dmitrovke-zal2-007-4072-y0s.jpg" alt="Зал 2: коридор с кирпичной кладкой" loading="lazy">
       <img src="https://sauna.ru/uploads/sauna/53/halls/76/hall_tmb/banya-dmitrovke-zal2-008-21037-i2h.jpg" alt="Зал 2: общий вид" loading="lazy">
@@ -236,7 +253,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
     </div>
   </article>
 
-  <div class="veranda">
+  <div class="veranda" data-gallery="Веранда">
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-006-54420-ned.jpg" alt="Летняя веранда со столом" loading="lazy">
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-007-54421-1th.jpg" alt="Летняя веранда вечером" loading="lazy">
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-008-54422-0e2.jpg" alt="Стол с тюльпанами на веранде" loading="lazy">
@@ -257,9 +274,8 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
 <section class="reviews wrap" id="reviews">
   <p class="kicker">Отзывы на Сауна.ру</p>
-  <div class="score"><b>5,0</b><span>средняя оценка<br>по 7 отзывам</span></div>
   <div class="quotes">
-    <figure><blockquote>Впервые были в этой сауне. Всё понравилось, главное чисто и уютно. Персонал быстро реагировал на просьбы.</blockquote><figcaption>Женя, 2023</figcaption></figure>
+    <figure><blockquote>Впервые были в этой сауне. Всё понравилось, главное чисто и уютно. Персонал быстро реагировал на просьбы.</blockquote><figcaption>Женя</figcaption></figure>
     <figure><blockquote>Ходим в эту сауну не первый год, очень довольны всем: всегда чисто, приятный интерьер, приятные администраторы.</blockquote><figcaption>Людмила</figcaption></figure>
     <figure><blockquote>2 комнаты отдыха, шикарные диваны, мягкие, стол большой, интерьер сказка. Да и не дорого.</blockquote><figcaption>Артур</figcaption></figure>
   </div>
@@ -287,6 +303,15 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 </section>
 </main>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото" hidden>
+  <div class="lb-top" id="lbTitle"></div>
+  <img id="lbImg" alt="">
+  <button class="lb-close" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="lb-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="lb-bar"><b id="lbCount"></b><span id="lbCap"></span></div>
+</div>
+
 <script>
 // Переключатель темы
 (function () {
@@ -303,6 +328,81 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
     root.setAttribute('data-theme', t);
     try { localStorage.setItem('theme', t); } catch (e) {}
     label();
+  });
+})();
+
+// Фото на весь экран: листаются только снимки одного зала (data-gallery)
+(function () {
+  var lb = document.getElementById('lb');
+  var img = document.getElementById('lbImg');
+  var title = document.getElementById('lbTitle');
+  var count = document.getElementById('lbCount');
+  var cap = document.getElementById('lbCap');
+  var list = [], i = 0, opener = null;
+
+  function full(src) { return src.replace('/hall_tmb/', '/'); }
+  function show() {
+    var t = list[i];
+    img.classList.add('loading');
+    img.onload = function () { img.classList.remove('loading'); };
+    img.onerror = function () { img.onerror = null; img.src = t.src; }; // нет большого — показываем превью
+    img.src = full(t.src);
+    img.alt = t.alt;
+    count.textContent = (i + 1) + ' / ' + list.length;
+    cap.textContent = t.alt.replace(/^[^:]+:\s*/, '');
+    var many = list.length > 1;
+    lb.querySelector('.lb-prev').hidden = !many;
+    lb.querySelector('.lb-next').hidden = !many;
+    // подгружаем соседние
+    [i + 1, i - 1].forEach(function (k) { if (list[(k + list.length) % list.length]) new Image().src = full(list[(k + list.length) % list.length].src); });
+  }
+  function go(d) { i = (i + d + list.length) % list.length; show(); }
+  function open(el) {
+    var name = el.closest('[data-gallery]').getAttribute('data-gallery');
+    list = [];
+    document.querySelectorAll('[data-gallery]').forEach(function (g) {
+      if (g.getAttribute('data-gallery') === name) g.querySelectorAll('img').forEach(function (x) { list.push(x); });
+    });
+    i = list.indexOf(el);
+    title.textContent = name;
+    opener = el;
+    lb.hidden = false;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    show();
+    lb.querySelector('.lb-close').focus();
+  }
+  function close() {
+    lb.classList.remove('open');
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    img.removeAttribute('src');
+    if (opener) opener.focus();
+  }
+
+  document.querySelectorAll('[data-gallery] img').forEach(function (x) {
+    x.tabIndex = 0;
+    x.addEventListener('click', function () { open(x); });
+    x.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(x); } });
+  });
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  lb.querySelector('.lb-prev').addEventListener('click', function () { go(-1); });
+  lb.querySelector('.lb-next').addEventListener('click', function () { go(1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(1);
+  });
+  // свайп на телефоне
+  var x0 = null;
+  lb.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (x0 === null || list.length < 2) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+    x0 = null;
   });
 })();
 
