@@ -34,6 +34,7 @@
   color-scheme: dark;
 }
 /* Светлая тема: день, пар и светлое дерево */
+:root { --err: #f0806f; }
 :root[data-theme="light"] {
   --night: #f6f1e6;
   --deep: #ebe3d0;
@@ -43,6 +44,7 @@
   --accent: #8f6210;
   --gold-hover: #c8922f;
   --map-filter: none;
+  --err: #b3392b;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -141,6 +143,93 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 .map { margin-top: 30px; height: 320px; border-radius: 8px; overflow: hidden; background: var(--deep); }
 .map iframe { width: 100%; height: 100%; border: 0; filter: var(--map-filter); }
 
+/* Заявка на бронь */
+.booking { border-top: 1px solid var(--line); padding: clamp(80px, 11vw, 160px) 0; }
+.bk-head { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+.bk-head p:last-child { color: var(--dim); max-width: 28em; }
+.bk-form { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
+.bk-form[hidden] { display: none; }
+.bk-col { display: grid; gap: 34px; min-width: 0; }
+.bk-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.f-label { display: block; padding: 0; margin-bottom: 12px; font-weight: 700; font-size: 15px; }
+.f-label small { font-weight: 400; color: var(--dim); font-size: 14px; }
+.f-input { width: 100%; min-height: 54px; padding: 0 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--deep); color: var(--steam); font: inherit; }
+textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
+.f-input::placeholder { color: var(--dim); opacity: .7; }
+.f-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.f-input[aria-invalid="true"] { border-color: var(--err); }
+.f-err { color: var(--err); font-size: 14px; margin-top: 8px; }
+.f-err:empty { display: none; }
+.f-hint { color: var(--dim); font-size: 14px; margin-top: 8px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Выбор зала и способа связи */
+.opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.opt { position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.opt input { position: absolute; opacity: 0; pointer-events: none; }
+.opt span { display: block; height: 100%; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; transition: border-color .2s, background .2s; }
+.opt b { display: block; font: 500 18px/1.2 'Geologica'; }
+.opt small { display: block; margin-top: 4px; color: var(--dim); font-size: 13px; line-height: 1.35; }
+.opt input:checked + span { border-color: var(--accent); background: var(--deep); box-shadow: inset 0 0 0 1px var(--accent); }
+.opt input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pills .opt span { padding: 0 18px; min-height: 44px; display: flex; align-items: center; border-radius: 999px; font-size: 15px; }
+
+/* Календарь */
+.cal { border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cal-head b { font: 500 18px/1 'Geologica'; text-transform: capitalize; }
+.cal-nav { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%; background: none; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cal-nav:disabled { opacity: .25; cursor: default; }
+.cal-nav svg { width: 18px; height: 18px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal-grid .wd { font-size: 12px; color: var(--dim); padding: 4px 0; text-transform: uppercase; letter-spacing: .06em; }
+.day { min-height: 42px; border: 0; border-radius: 8px; background: none; color: inherit; font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.day:not(:disabled):hover { background: var(--deep); }
+.day.today { box-shadow: inset 0 0 0 1px var(--line); }
+.day:disabled { opacity: .28; cursor: default; }
+.day.full { text-decoration: line-through; }
+.day[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+
+/* Время */
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
+.slot { min-height: 44px; border: 1px solid var(--line); border-radius: 8px; background: none; color: inherit; font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.slot:not(:disabled):hover { background: var(--deep); }
+.slot:disabled { opacity: .3; text-decoration: line-through; cursor: default; }
+.slot[aria-pressed="true"] { background: var(--gold); border-color: var(--gold); color: var(--on-gold); font-weight: 700; }
+.slots-empty { padding: 18px; border: 1px dashed var(--line); border-radius: 10px; color: var(--dim); font-size: 15px; }
+.legend[hidden] { display: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; color: var(--dim); font-size: 13px; }
+.legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; border: 1px solid var(--line); }
+.legend .l-busy { opacity: .35; background: var(--line); }
+.legend .l-sel { background: var(--gold); border-color: var(--gold); }
+
+/* Счётчики */
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; }
+.stepper button { width: 48px; height: 48px; border: 0; border-radius: 50%; background: none; color: inherit; font: 300 24px/1 'Geologica'; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.stepper button:disabled { opacity: .25; cursor: default; }
+.stepper output { min-width: 84px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Итог и отправка */
+.bk-side { position: sticky; top: 24px; }
+.bk-sum { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.bk-sum dl div { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.bk-sum dt { color: var(--dim); }
+.bk-sum dd { text-align: right; }
+.bk-sum .total { border-bottom: 0; padding-top: 14px; font-size: 18px; }
+.bk-sum .total dd { font-weight: 700; }
+.bk-submit { width: 100%; justify-content: center; margin-top: 18px; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
+.bk-submit:disabled { opacity: .6; cursor: progress; }
+.bk-note { margin-top: 12px; color: var(--dim); font-size: 14px; text-align: center; }
+.bk-done { display: none; max-width: 640px; }
+.bk-done.show { display: block; }
+.bk-done h3 { font: 500 clamp(30px, 3.4vw, 44px)/1.1 'Geologica'; margin-bottom: 14px; }
+.bk-done p { color: var(--dim); margin-bottom: 24px; }
+.bk-done .bk-sum { margin-bottom: 24px; }
+.bk-demo { font-size: 13px; }
+.hall-book { margin-top: 26px; }
+
 /* Просмотр фото на весь экран */
 [data-gallery] img { cursor: zoom-in; }
 .lb { position: fixed; inset: 0; z-index: 50; display: none; background: rgba(6, 12, 10, .94); color: #eee6d3; touch-action: pan-y; }
@@ -170,12 +259,19 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
   .veranda { grid-template-columns: repeat(3, 1fr); }
   .veranda div { grid-column: 1 / -1; padding: 16px 0 0; }
   .quotes { grid-template-columns: 1fr; }
+  .bk-head, .bk-form { grid-template-columns: 1fr; }
+  .bk-side { position: static; }
 }
 @media (max-width: 520px) {
   .top .tel { display: none; }
   .theme { margin-left: auto; }
   .hero .btn { width: 100%; justify-content: center; }
   .contact dl div { grid-template-columns: 1fr; }
+  .opts { grid-template-columns: 1fr; }
+  .opts .opt span { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .opts .opt small { margin: 0; text-align: right; }
+  .row2 { grid-template-columns: 1fr; }
+  .cal { padding: 10px; }
   .lb img { inset: 72px 0 64px; width: 100%; height: calc(100% - 136px); }
   .lb .lb-prev, .lb .lb-next { top: auto; bottom: 10px; translate: none; width: 44px; height: 44px; }
 }
@@ -186,7 +282,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
 <header class="top">
   <a class="brand" href="#">Сауна <b>на Дмитровке</b></a>
-  <nav><a href="#halls">Залы</a><a href="#own">Со своим</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></nav>
+  <nav><a href="#halls">Залы</a><a href="#own">Со своим</a><a href="#reviews">Отзывы</a><a href="#booking">Бронь</a><a href="#contact">Контакты</a></nav>
   <a class="tel" href="tel:+79646320082">+7 964 632-00-82</a>
   <button class="theme" id="themeBtn" type="button" aria-label="Переключить тему">
     <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -202,7 +298,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
     <h1>Сауна на Дмитровке. <span>Финская парная, бассейн и джакузи — в любое время суток.</span></h1>
     <div class="actions">
       <a class="btn" href="tel:+79646320082">Позвонить и забронировать</a>
-      <a class="btn btn-ghost" href="#halls">Выбрать зал</a>
+      <a class="btn btn-ghost" href="#booking">Оставить заявку</a>
     </div>
   </div>
   <figure data-gallery="Зал 1">
@@ -238,6 +334,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
       <p>Финская сауна, бассейн и джакузи, две комнаты отдыха с мягкими диванами и большим столом, бильярд и караоке.</p>
       <p class="price">от <b>2 200 ₽</b> в час · минимум 1 час</p>
       <ul class="tags"><li>Сауна</li><li>Бассейн 2×2</li><li>Джакузи</li><li>Бильярд</li><li>Караоке</li></ul>
+      <a class="btn btn-ghost hall-book" href="#booking" data-hall="z1">Забронировать зал 1</a>
     </div>
   </article>
 
@@ -253,6 +350,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
       <p>Самый просторный: тёплые стены, красный ковёр и бильярд. Сауна, бассейн, две комнаты отдыха и караоке — для большой компании.</p>
       <p class="price">от <b>2 200 ₽</b> в час · минимум 1 час</p>
       <ul class="tags"><li>Сауна</li><li>Бассейн</li><li>Бильярд</li><li>Караоке</li><li>Кухня</li></ul>
+      <a class="btn btn-ghost hall-book" href="#booking" data-hall="z2">Забронировать зал 2</a>
     </div>
   </article>
 
@@ -264,6 +362,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
       <p class="kicker">Летом</p>
       <h3 style="font: 500 30px/1.1 Geologica">Веранда на свежем воздухе</h3>
       <p class="price">от <b>500 ₽</b> в час</p>
+      <a class="btn btn-ghost hall-book" href="#booking" data-hall="ver">Забронировать веранду</a>
     </div>
   </div>
 </section>
@@ -281,6 +380,106 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
     <figure><blockquote>Впервые были в этой сауне. Всё понравилось, главное чисто и уютно. Персонал быстро реагировал на просьбы.</blockquote><figcaption>Женя</figcaption></figure>
     <figure><blockquote>Ходим в эту сауну не первый год, очень довольны всем: всегда чисто, приятный интерьер, приятные администраторы.</blockquote><figcaption>Людмила</figcaption></figure>
     <figure><blockquote>2 комнаты отдыха, шикарные диваны, мягкие, стол большой, интерьер сказка. Да и не дорого.</blockquote><figcaption>Артур</figcaption></figure>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="wrap">
+    <div class="bk-head">
+      <div>
+        <p class="kicker">Бронь</p>
+        <h2>Заявка на бронь</h2>
+      </div>
+      <p>Выберите зал, день и время — администратор перезвонит и подтвердит бронь. Займёт около минуты.</p>
+    </div>
+
+    <form class="bk-form" id="bkForm" novalidate>
+      <div class="bk-col">
+        <fieldset>
+          <legend class="f-label">Зал</legend>
+          <div class="opts" id="hallOpts">
+            <label class="opt"><input type="radio" name="hall" value="z1"><span><b>Зал 1</b><small>до 10 гостей · от 2&nbsp;200&nbsp;₽/ч</small></span></label>
+            <label class="opt"><input type="radio" name="hall" value="z2"><span><b>Зал 2</b><small>до 15 гостей · от 2&nbsp;200&nbsp;₽/ч</small></span></label>
+            <label class="opt"><input type="radio" name="hall" value="ver"><span><b>Веранда</b><small>летом · от 500&nbsp;₽/ч</small></span></label>
+          </div>
+          <p class="f-err" id="hallErr"></p>
+        </fieldset>
+
+        <fieldset>
+          <legend class="f-label">День</legend>
+          <div class="cal" id="cal"></div>
+          <p class="f-err" id="dateErr"></p>
+        </fieldset>
+
+        <div class="row2">
+          <div>
+            <span class="f-label" id="durLabel">Сколько часов <small>· минимум 1</small></span>
+            <div class="stepper" role="group" aria-labelledby="durLabel">
+              <button type="button" id="durMinus" aria-label="Меньше часов">−</button>
+              <output id="durOut" aria-live="polite">2 часа</output>
+              <button type="button" id="durPlus" aria-label="Больше часов">+</button>
+            </div>
+          </div>
+          <div>
+            <span class="f-label" id="gLabel">Гостей</span>
+            <div class="stepper" role="group" aria-labelledby="gLabel">
+              <button type="button" id="gMinus" aria-label="Меньше гостей">−</button>
+              <output id="gOut" aria-live="polite">4</output>
+              <button type="button" id="gPlus" aria-label="Больше гостей">+</button>
+            </div>
+            <p class="f-hint" id="gHint"></p>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend class="f-label">Время начала <small id="slotsFor"></small></legend>
+          <div id="slots"></div>
+          <p class="legend" id="slotsLegend" hidden><span><i class="l-sel"></i>выбрано</span><span><i class="l-busy"></i>занято или не хватает часов подряд</span></p>
+          <p class="f-err" id="timeErr"></p>
+        </fieldset>
+      </div>
+
+      <div class="bk-col bk-side">
+        <div>
+          <label class="f-label" for="bkName">Ваше имя</label>
+          <input class="f-input" id="bkName" name="name" autocomplete="name" placeholder="Например, Алексей" aria-describedby="nameErr">
+          <p class="f-err" id="nameErr"></p>
+        </div>
+        <div>
+          <label class="f-label" for="bkPhone">Телефон</label>
+          <input class="f-input" id="bkPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (900) 000-00-00" aria-describedby="phoneErr">
+          <p class="f-err" id="phoneErr"></p>
+        </div>
+        <fieldset>
+          <legend class="f-label">Как с вами связаться</legend>
+          <div class="pills">
+            <label class="opt"><input type="radio" name="channel" value="Звонок" checked><span>Позвонить</span></label>
+            <label class="opt"><input type="radio" name="channel" value="WhatsApp"><span>WhatsApp</span></label>
+            <label class="opt"><input type="radio" name="channel" value="Telegram"><span>Telegram</span></label>
+          </div>
+        </fieldset>
+        <div>
+          <label class="f-label" for="bkNote">Пожелания <small>· необязательно</small></label>
+          <textarea class="f-input" id="bkNote" name="note" rows="3" placeholder="Например, шашлык к 20:00 или день рождения"></textarea>
+        </div>
+
+        <div class="bk-sum" aria-live="polite">
+          <dl id="bkSum"></dl>
+        </div>
+        <div>
+          <button class="btn bk-submit" type="submit" id="bkSubmit">Отправить заявку</button>
+          <p class="bk-note">Номер нужен только чтобы подтвердить бронь.</p>
+        </div>
+      </div>
+    </form>
+
+    <div class="bk-done" id="bkDone" tabindex="-1">
+      <h3>Заявка принята</h3>
+      <p id="bkDoneText"></p>
+      <div class="bk-sum"><dl id="bkDoneSum"></dl></div>
+      <button class="btn btn-ghost" type="button" id="bkAgain">Новая заявка</button>
+      <p class="f-hint bk-demo">Демо-версия: заявка пока никуда не отправляется.</p>
+    </div>
   </div>
 </section>
 
@@ -407,6 +606,276 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
     if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
     x0 = null;
   });
+})();
+
+// Заявка на бронь. Занятость — тестовая: генерируется из зала и даты,
+// чтобы часть времени была недоступна. Отправки на сервер пока нет.
+(function () {
+  var HALLS = {
+    z1: { name: 'Зал 1', rate: 2200, max: 10 },
+    z2: { name: 'Зал 2', rate: 2200, max: 15 },
+    ver: { name: 'Веранда', rate: 500, max: 15 }
+  };
+  var MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
+  var MONTHS_GEN = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  var WD = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  var WD_SHORT = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+  var DAYS_AHEAD = 60;
+
+  var form = document.getElementById('bkForm');
+  var $ = function (id) { return document.getElementById(id); };
+  var st = { hall: null, date: null, start: null, dur: 2, guests: 4, view: null };
+
+  // Москва: сегодняшняя дата и текущий час
+  function msk() {
+    var p = {};
+    new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Moscow', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23' })
+      .formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+    return { key: p.year + '-' + p.month + '-' + p.day, hour: +p.hour };
+  }
+  function toDate(key) { var a = key.split('-'); return new Date(Date.UTC(+a[0], a[1] - 1, +a[2])); }
+  function toKey(d) { return d.toISOString().slice(0, 10); }
+  function addDays(key, n) { return toKey(new Date(toDate(key).getTime() + n * 864e5)); }
+  var today = msk().key, maxKey = addDays(today, DAYS_AHEAD);
+
+  // Тестовая занятость: детерминированно от зала и даты
+  function hash(str) { var x = 2166136261; for (var i = 0; i < str.length; i++) { x ^= str.charCodeAt(i); x = Math.imul(x, 16777619); } return x >>> 0; }
+  function rng(seed) { return function () { seed = (seed + 0x6D2B79F5) | 0; var t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t ^= t + Math.imul(t ^ (t >>> 7), 61 | t); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  var cache = {};
+  function busy(hall, key) {
+    var id = hall + key;
+    if (cache[id]) return cache[id];
+    var r = rng(hash(id)), h = [], i, j;
+    for (i = 0; i < 24; i++) h[i] = false;
+    if (key !== today && r() < 0.08) { for (i = 0; i < 24; i++) h[i] = true; return (cache[id] = h); }
+    var n = 1 + Math.floor(r() * 3);
+    for (i = 0; i < n; i++) {
+      var s = 12 + Math.floor(r() * 11), len = 2 + Math.floor(r() * 3);
+      for (j = s; j < Math.min(24, s + len); j++) h[j] = true;
+    }
+    if (r() < 0.35) { h[0] = h[1] = h[2] = true; }
+    return (cache[id] = h);
+  }
+  function past(key, hour) { if (key < today) return true; return key === today && hour <= msk().hour; }
+  function free(hall, key, start, dur) {
+    for (var i = 0; i < dur; i++) {
+      var k = key, hh = start + i;
+      if (hh >= 24) { k = addDays(key, 1); hh -= 24; }
+      if (past(k, hh) || busy(hall, k)[hh]) return false;
+    }
+    return true;
+  }
+  function dayHasTime(hall, key) {
+    for (var h = 0; h < 24; h++) if (free(hall, key, h, st.dur)) return true;
+    return false;
+  }
+
+  function plural(n, a, b, c) { var m = n % 10, mm = n % 100; return m === 1 && mm !== 11 ? a : m >= 2 && m <= 4 && (mm < 10 || mm >= 20) ? b : c; }
+  function hh(h) { return (h < 10 ? '0' : '') + h + ':00'; }
+  function niceDate(key) { var d = toDate(key); return d.getUTCDate() + ' ' + MONTHS_GEN[d.getUTCMonth()] + ', ' + WD_SHORT[d.getUTCDay()]; }
+  function money(n) { return n.toLocaleString('ru-RU').replace(/\s/g, ' ') + ' ₽'; }
+
+  // Календарь
+  function renderCal() {
+    if (!st.view) { var t = toDate(today); st.view = { y: t.getUTCFullYear(), m: t.getUTCMonth() }; }
+    var y = st.view.y, m = st.view.m;
+    var first = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;
+    var days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+    var t0 = toDate(today), tMax = toDate(maxKey);
+    var canPrev = y > t0.getUTCFullYear() || m > t0.getUTCMonth();
+    var canNext = y < tMax.getUTCFullYear() || m < tMax.getUTCMonth();
+    var html = '<div class="cal-head"><button type="button" class="cal-nav" data-nav="-1" aria-label="Предыдущий месяц"' + (canPrev ? '' : ' disabled') + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+      '<b aria-live="polite">' + MONTHS[m] + ' ' + y + '</b>' +
+      '<button type="button" class="cal-nav" data-nav="1" aria-label="Следующий месяц"' + (canNext ? '' : ' disabled') + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="cal-grid">';
+    WD.forEach(function (w) { html += '<span class="wd" aria-hidden="true">' + w + '</span>'; });
+    for (var i = 0; i < first; i++) html += '<span></span>';
+    for (var d = 1; d <= days; d++) {
+      var key = toKey(new Date(Date.UTC(y, m, d)));
+      var out = key < today || key > maxKey;
+      var full = !out && st.hall && !dayHasTime(st.hall, key);
+      var cls = 'day' + (key === today ? ' today' : '') + (full ? ' full' : '');
+      var label = d + ' ' + MONTHS_GEN[m] + (full ? ', всё занято' : '');
+      html += '<button type="button" class="' + cls + '" data-day="' + key + '" aria-label="' + label + '" aria-pressed="' + (key === st.date) + '"' + (out || full ? ' disabled' : '') + '>' + d + '</button>';
+    }
+    $('cal').innerHTML = html + '</div>';
+  }
+
+  // Время начала
+  function renderSlots() {
+    var box = $('slots'), legend = $('slotsLegend');
+    $('slotsFor').textContent = st.date ? '· ' + niceDate(st.date) : '';
+    if (!st.hall || !st.date) {
+      box.innerHTML = '<p class="slots-empty">' + (!st.hall ? 'Сначала выберите зал' : 'Сначала выберите день') + ' — покажем свободное время.</p>';
+      legend.hidden = true;
+      return;
+    }
+    var html = '<div class="slots" role="group" aria-label="Время начала">';
+    for (var h = 0; h < 24; h++) {
+      var ok = free(st.hall, st.date, h, st.dur);
+      html += '<button type="button" class="slot" data-h="' + h + '" aria-pressed="' + (st.start === h) + '"' + (ok ? '' : ' disabled aria-label="' + hh(h) + ', недоступно"') + '>' + hh(h) + '</button>';
+    }
+    box.innerHTML = html + '</div>';
+    legend.hidden = false;
+  }
+
+  function renderSteppers() {
+    var max = st.hall ? HALLS[st.hall].max : 15;
+    if (st.guests > max) st.guests = max;
+    $('durOut').textContent = st.dur + ' ' + plural(st.dur, 'час', 'часа', 'часов');
+    $('durMinus').disabled = st.dur <= 1;
+    $('durPlus').disabled = st.dur >= 12;
+    $('gOut').textContent = st.guests;
+    $('gMinus').disabled = st.guests <= 1;
+    $('gPlus').disabled = st.guests >= max;
+    $('gHint').textContent = st.hall && st.hall !== 'ver' ? 'В ' + HALLS[st.hall].name.toLowerCase().replace('зал', 'зале') + ' — до ' + max : '';
+  }
+
+  function sumRows() {
+    var hall = st.hall ? HALLS[st.hall] : null;
+    var time = st.start === null ? '—' : hh(st.start) + ' – ' + hh((st.start + st.dur) % 24) + (st.start + st.dur > 24 ? ' (след. день)' : '');
+    var rows = [
+      ['Зал', hall ? hall.name : '—'],
+      ['День', st.date ? niceDate(st.date) : '—'],
+      ['Время', time],
+      ['Гостей', st.guests]
+    ];
+    var html = rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
+    html += '<div class="total"><dt>Стоимость</dt><dd>' + (hall ? 'от ' + money(hall.rate * st.dur) : '—') + '</dd></div>';
+    return html;
+  }
+
+  function render() {
+    renderSteppers();
+    // если при смене зала или длительности выбранное стало недоступно — сбрасываем
+    if (st.hall && st.date && !dayHasTime(st.hall, st.date)) { st.date = null; st.start = null; }
+    if (st.start !== null && !(st.hall && st.date && free(st.hall, st.date, st.start, st.dur))) st.start = null;
+    renderCal();
+    renderSlots();
+    $('bkSum').innerHTML = sumRows();
+  }
+
+  // Проверка полей
+  function setErr(input, errId, msg) {
+    $(errId).textContent = msg || '';
+    if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+  function phoneDigits() { return $('bkPhone').value.replace(/\D/g, ''); }
+  var checks = {
+    hall: function () { return setErr(null, 'hallErr', st.hall ? '' : 'Выберите зал'); },
+    date: function () { return setErr(null, 'dateErr', st.date ? '' : 'Выберите день в календаре'); },
+    time: function () { return setErr(null, 'timeErr', st.start !== null ? '' : st.date ? 'Выберите время начала' : ''); },
+    name: function () { var v = $('bkName').value.trim(); return setErr($('bkName'), 'nameErr', v.length >= 2 ? '' : 'Напишите, как к вам обращаться'); },
+    phone: function () { var d = phoneDigits(); return setErr($('bkPhone'), 'phoneErr', d.length === 11 ? '' : 'Нужен номер из 10 цифр после +7, например +7 (900) 123-45-67'); }
+  };
+
+  // Маска телефона: +7 (XXX) XXX-XX-XX
+  $('bkPhone').addEventListener('input', function (e) {
+    var d = e.target.value.replace(/\D/g, '');
+    if (!d) { e.target.value = ''; return; }
+    if (d[0] === '8') d = '7' + d.slice(1);
+    if (d[0] !== '7') d = '7' + d;
+    d = d.slice(0, 11);
+    var out = '+7';
+    if (d.length > 1) out += ' (' + d.slice(1, 4);
+    if (d.length >= 4) out += ')';
+    if (d.length > 4) out += ' ' + d.slice(4, 7);
+    if (d.length > 7) out += '-' + d.slice(7, 9);
+    if (d.length > 9) out += '-' + d.slice(9, 11);
+    e.target.value = out;
+    if (e.target.getAttribute('aria-invalid') === 'true') checks.phone();
+  });
+  $('bkPhone').addEventListener('blur', function () { if (this.value) checks.phone(); });
+  $('bkName').addEventListener('blur', function () { if (this.value) checks.name(); });
+  $('bkName').addEventListener('input', function () { if (this.getAttribute('aria-invalid') === 'true') checks.name(); });
+
+  // Выбор зала
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'hall') { st.hall = e.target.value; checks.hall(); render(); }
+  });
+  function pickHall(v) {
+    var r = form.querySelector('input[name="hall"][value="' + v + '"]');
+    if (r) { r.checked = true; st.hall = v; setErr(null, 'hallErr', ''); render(); }
+  }
+  document.querySelectorAll('.hall-book').forEach(function (a) {
+    a.addEventListener('click', function () { pickHall(a.getAttribute('data-hall')); });
+  });
+
+  // Календарь, время и счётчики
+  $('cal').addEventListener('click', function (e) {
+    var nav = e.target.closest('[data-nav]'), day = e.target.closest('[data-day]');
+    if (nav) {
+      var m = st.view.m + +nav.getAttribute('data-nav');
+      st.view = { y: st.view.y + Math.floor(m / 12), m: (m + 12) % 12 };
+      renderCal();
+    } else if (day) {
+      st.date = day.getAttribute('data-day');
+      st.start = null;
+      checks.date();
+      setErr(null, 'timeErr', '');
+      render();
+      var f = $('cal').querySelector('[data-day="' + st.date + '"]');
+      if (f) f.focus();
+    }
+  });
+  $('slots').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-h]');
+    if (!b) return;
+    st.start = +b.getAttribute('data-h');
+    checks.time();
+    render();
+    var f = $('slots').querySelector('[data-h="' + st.start + '"]');
+    if (f) f.focus();
+  });
+  $('durMinus').addEventListener('click', function () { st.dur = Math.max(1, st.dur - 1); render(); });
+  $('durPlus').addEventListener('click', function () { st.dur = Math.min(12, st.dur + 1); render(); });
+  $('gMinus').addEventListener('click', function () { st.guests = Math.max(1, st.guests - 1); render(); });
+  $('gPlus').addEventListener('click', function () { st.guests += 1; render(); });
+
+  // Отправка
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var order = [['hall', '#hallOpts input'], ['date', '#cal .day:not(:disabled)'], ['time', '#slots .slot:not(:disabled), #cal .day:not(:disabled)'], ['name', '#bkName'], ['phone', '#bkPhone']];
+    var firstBad = null;
+    order.forEach(function (o) { if (!checks[o[0]]() && !firstBad) firstBad = o; });
+    if (!st.date) checks.time();
+    if (firstBad) {
+      var el = form.querySelector(firstBad[1]);
+      if (el) { el.scrollIntoView({ block: 'center' }); el.focus({ preventScroll: true }); }
+      return;
+    }
+    var btn = $('bkSubmit');
+    btn.disabled = true;
+    btn.textContent = 'Отправляем…';
+    var data = {
+      hall: HALLS[st.hall].name, date: st.date, start: hh(st.start), hours: st.dur, guests: st.guests,
+      name: $('bkName').value.trim(), phone: $('bkPhone').value,
+      channel: form.querySelector('input[name="channel"]:checked').value, note: $('bkNote').value.trim()
+    };
+    // Здесь будет отправка на сервер (Telegram-бот, почта и т. п.)
+    setTimeout(function () {
+      console.log('Заявка на бронь', data);
+      $('bkDoneText').textContent = data.name + ', спасибо! ' + (data.channel === 'Звонок' ? 'Администратор перезвонит' : 'Администратор напишет в ' + data.channel) + ' на ' + data.phone.replace(/ /g, '00a0') + ', чтобы подтвердить бронь.';
+      $('bkDoneSum').innerHTML = sumRows();
+      form.hidden = true;
+      $('bkDone').classList.add('show');
+      $('bkDone').focus();
+      btn.disabled = false;
+      btn.textContent = 'Отправить заявку';
+    }, 900);
+  });
+  $('bkAgain').addEventListener('click', function () {
+    form.reset();
+    st = { hall: null, date: null, start: null, dur: 2, guests: 4, view: null };
+    ['bkName', 'bkPhone'].forEach(function (id) { $(id).removeAttribute('aria-invalid'); });
+    ['hallErr', 'dateErr', 'timeErr', 'nameErr', 'phoneErr'].forEach(function (id) { $(id).textContent = ''; });
+    $('bkDone').classList.remove('show');
+    form.hidden = false;
+    render();
+    $('booking').scrollIntoView();
+  });
+
+  render();
 })();
 
 // Живые часы: московское время и строка про то, что сауна открыта
