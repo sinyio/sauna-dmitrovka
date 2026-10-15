@@ -855,7 +855,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     // Здесь будет отправка на сервер (Telegram-бот, почта и т. п.)
     setTimeout(function () {
       console.log('Заявка на бронь', data);
-      $('bkDoneText').textContent = data.name + ', спасибо! ' + (data.channel === 'Звонок' ? 'Администратор перезвонит' : 'Администратор напишет в ' + data.channel) + ' на ' + data.phone.replace(/ /g, '00a0') + ', чтобы подтвердить бронь.';
+      $('bkDoneText').textContent = data.name + ', спасибо! ' + (data.channel === 'Звонок' ? 'Администратор перезвонит' : 'Администратор напишет в ' + data.channel) + ' на ' + data.phone.replace(/ /g, ' ') + ', чтобы подтвердить бронь.';
       $('bkDoneSum').innerHTML = sumRows();
       form.hidden = true;
       $('bkDone').classList.add('show');
