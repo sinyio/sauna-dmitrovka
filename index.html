@@ -229,6 +229,17 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 .bk-done .bk-sum { margin-bottom: 24px; }
 .bk-demo { font-size: 13px; }
 .hall-book { margin-top: 26px; }
+.agree { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--dim); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.agree input { appearance: none; -webkit-appearance: none; flex: none; display: grid; place-content: center; width: 22px; height: 22px; margin: 0; border: 1px solid var(--dim); border-radius: 6px; background: none; cursor: pointer; }
+.agree input::before { content: ""; width: 6px; height: 11px; margin-top: -3px; border: solid var(--on-gold); border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform .15s; }
+.agree input:checked { background: var(--gold); border-color: var(--gold); }
+.agree input:checked::before { transform: rotate(45deg) scale(1); }
+.agree input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.agree input[aria-invalid="true"] { border-color: var(--err); }
+.agree a { color: var(--steam); }
+.foot { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--dim); font-size: 14px; }
+.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.foot a { color: inherit; }
 
 /* Просмотр фото на весь экран */
 [data-gallery] img { cursor: zoom-in; }
@@ -467,6 +478,11 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
           <dl id="bkSum"></dl>
         </div>
         <div>
+          <label class="agree">
+            <input type="checkbox" id="bkAgree" name="agree" aria-describedby="agreeErr">
+            <span>Согласен на <a href="consent.html" target="_blank" rel="noopener">обработку персональных данных</a> и принимаю <a href="privacy.html" target="_blank" rel="noopener">политику конфиденциальности</a></span>
+          </label>
+          <p class="f-err" id="agreeErr"></p>
           <button class="btn bk-submit" type="submit" id="bkSubmit">Отправить заявку</button>
         </div>
       </div>
@@ -503,6 +519,13 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   </div>
 </section>
 </main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Сауна на Дмитровке · Москва, Дмитровское шоссе, 72</span>
+    <a href="privacy.html">Политика конфиденциальности</a>
+  </div>
+</footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото" hidden>
   <div class="lb-top" id="lbTitle"></div>
@@ -765,8 +788,10 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     date: function () { return setErr(null, 'dateErr', st.date ? '' : 'Выберите день в календаре'); },
     time: function () { return setErr(null, 'timeErr', st.start !== null ? '' : st.date ? 'Выберите время начала' : ''); },
     name: function () { var v = $('bkName').value.trim(); return setErr($('bkName'), 'nameErr', v.length >= 2 ? '' : 'Напишите, как к вам обращаться'); },
-    phone: function () { var d = phoneDigits(); return setErr($('bkPhone'), 'phoneErr', d.length === 11 ? '' : 'Нужен номер из 10 цифр после +7, например +7 (900) 123-45-67'); }
+    phone: function () { var d = phoneDigits(); return setErr($('bkPhone'), 'phoneErr', d.length === 11 ? '' : 'Нужен номер из 10 цифр после +7, например +7 (900) 123-45-67'); },
+    agree: function () { return setErr($('bkAgree'), 'agreeErr', $('bkAgree').checked ? '' : 'Без согласия мы не сможем принять заявку'); }
   };
+  $('bkAgree').addEventListener('change', function () { if (this.getAttribute('aria-invalid') === 'true') checks.agree(); });
 
   // Маска телефона: +7 (XXX) XXX-XX-XX
   var prevDigits = '';
@@ -851,7 +876,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   // Отправка
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var order = [['hall', '#hallOpts input'], ['date', '#cal .day:not(:disabled)'], ['time', '#slots .slot:not(:disabled), #cal .day:not(:disabled)'], ['name', '#bkName'], ['phone', '#bkPhone']];
+    var order = [['hall', '#hallOpts input'], ['date', '#cal .day:not(:disabled)'], ['time', '#slots .slot:not(:disabled), #cal .day:not(:disabled)'], ['name', '#bkName'], ['phone', '#bkPhone'], ['agree', '#bkAgree']];
     var firstBad = null;
     order.forEach(function (o) { if (!checks[o[0]]() && !firstBad) firstBad = o; });
     if (!st.date) checks.time();
@@ -866,7 +891,8 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     var data = {
       hall: HALLS[st.hall].name, date: st.date, start: hh(st.start), hours: st.dur, guests: st.guests,
       name: $('bkName').value.trim(), phone: $('bkPhone').value,
-      channel: form.querySelector('input[name="channel"]:checked').value, note: $('bkNote').value.trim()
+      channel: form.querySelector('input[name="channel"]:checked').value, note: $('bkNote').value.trim(),
+      consentAt: new Date().toISOString() // когда дано согласие на обработку данных
     };
     // Здесь будет отправка на сервер (Telegram-бот, почта и т. п.)
     setTimeout(function () {
@@ -884,8 +910,8 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     form.reset();
     prevDigits = '';
     st = { hall: null, date: null, start: null, dur: 2, guests: 4, view: null };
-    ['bkName', 'bkPhone'].forEach(function (id) { $(id).removeAttribute('aria-invalid'); });
-    ['hallErr', 'dateErr', 'timeErr', 'nameErr', 'phoneErr'].forEach(function (id) { $(id).textContent = ''; });
+    ['bkName', 'bkPhone', 'bkAgree'].forEach(function (id) { $(id).removeAttribute('aria-invalid'); });
+    ['hallErr', 'dateErr', 'timeErr', 'nameErr', 'phoneErr', 'agreeErr'].forEach(function (id) { $(id).textContent = ''; });
     $('bkDone').classList.remove('show');
     form.hidden = false;
     render();
