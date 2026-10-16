@@ -72,6 +72,7 @@ h2 { font: 300 clamp(38px, 5.4vw, 76px)/1.02 'Geologica', sans-serif; letter-spa
 .top .tel { text-decoration: none; font-weight: 700; }
 .theme { flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; color: inherit; cursor: pointer; transition: background .2s; }
 .theme, .lb button, [data-gallery] img { -webkit-tap-highlight-color: transparent; }
+button, .btn { -webkit-user-select: none; user-select: none; }
 .theme:focus:not(:focus-visible), .lb button:focus:not(:focus-visible) { outline: none; }
 @media (hover: hover) { .theme:hover { background: var(--deep); } }
 .theme svg { width: 20px; height: 20px; }
