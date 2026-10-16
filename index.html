@@ -120,6 +120,8 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 .tags li { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; }
 .veranda { margin-top: clamp(56px, 8vw, 110px); display: grid; grid-template-columns: repeat(3, 1fr) 1.2fr; gap: 10px; align-items: end; }
 .veranda img { aspect-ratio: 3 / 4; object-fit: cover; border-radius: 6px; width: 100%; }
+.veranda h3 { grid-column: 1 / -1; font: 500 clamp(32px, 3.4vw, 44px)/1.1 'Geologica'; margin-bottom: 14px; }
+.veranda h3 small { font: 400 13px/1 'Manrope', sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-left: 12px; vertical-align: middle; }
 .veranda div { padding-left: 24px; }
 
 /* Своё */
@@ -257,8 +259,6 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 .lb .lb-next { right: 12px; top: 50%; translate: 0 -50%; }
 .lb-bar { position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none; display: flex; justify-content: center; gap: 14px; padding: 22px; font-size: 15px; }
 .lb-bar b { font-weight: 700; color: #d9a441; }
-.lb-bar span { opacity: .7; }
-.lb-top { position: absolute; top: 28px; left: 24px; right: 84px; font: 500 18px/1 'Geologica'; }
 
 @media (max-width: 900px) {
   .top nav { display: none; }
@@ -367,12 +367,11 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   </article>
 
   <div class="veranda" data-gallery="Веранда">
+    <h3>Веранда на свежем воздухе <small>летом</small></h3>
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-006-54420-ned.jpg" alt="Летняя веранда со столом" loading="lazy">
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-007-54421-1th.jpg" alt="Летняя веранда вечером" loading="lazy">
     <img src="https://sauna.ru/uploads/sauna/53/halls/3393/hall_tmb/banya-dmitrovke-letnyaya-veranda-008-54422-0e2.jpg" alt="Стол с тюльпанами на веранде" loading="lazy">
     <div>
-      <p class="kicker">Летом</p>
-      <h3 style="font: 500 30px/1.1 Geologica">Веранда на свежем воздухе</h3>
       <p class="price">от <b>500 ₽</b> в час</p>
       <a class="btn btn-ghost hall-book" href="#booking" data-hall="ver">Забронировать веранду</a>
     </div>
@@ -387,7 +386,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 </section>
 
 <section class="reviews wrap" id="reviews">
-  <p class="kicker">Отзывы на Сауна.ру</p>
+  <p class="kicker">Отзывы посетителей</p>
   <div class="quotes">
     <figure><blockquote>Впервые были в этой сауне. Всё понравилось, главное чисто и уютно. Персонал быстро реагировал на просьбы.</blockquote><figcaption>Женя</figcaption></figure>
     <figure><blockquote>Ходим в эту сауну не первый год, очень довольны всем: всегда чисто, приятный интерьер, приятные администраторы.</blockquote><figcaption>Людмила</figcaption></figure>
@@ -512,7 +511,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     <div>
       <dl>
         <div><dt>Адрес</dt><dd>Москва, Дмитровское шоссе, 72</dd></div>
-        <div><dt>Метро</dt><dd>Верхние Лихоборы — 470 м, Петровско-Разумовская</dd></div>
+        <div><dt>Метро</dt><dd>Верхние Лихоборы — 470 м</dd></div>
         <div><dt>Режим</dt><dd>Круглосуточно</dd></div>
       </dl>
       <div class="map"><iframe title="Карта" loading="lazy" src="https://yandex.ru/map-widget/v1/?ll=37.557087%2C55.859728&amp;z=17&amp;pt=37.557087%2C55.859728"></iframe></div>
@@ -529,12 +528,11 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото" hidden>
-  <div class="lb-top" id="lbTitle"></div>
   <img id="lbImg" alt="">
   <button class="lb-close" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   <button class="lb-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
   <button class="lb-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
-  <div class="lb-bar"><b id="lbCount"></b><span id="lbCap"></span></div>
+  <div class="lb-bar"><b id="lbCount"></b></div>
 </div>
 
 <script>
@@ -560,9 +558,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 (function () {
   var lb = document.getElementById('lb');
   var img = document.getElementById('lbImg');
-  var title = document.getElementById('lbTitle');
   var count = document.getElementById('lbCount');
-  var cap = document.getElementById('lbCap');
   var list = [], i = 0, opener = null;
 
   function full(src) { return src.replace('/hall_tmb/', '/'); }
@@ -574,7 +570,6 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     img.src = full(t.src);
     img.alt = t.alt;
     count.textContent = (i + 1) + ' / ' + list.length;
-    cap.textContent = t.alt.replace(/^[^:]+:\s*/, '');
     var many = list.length > 1;
     lb.querySelector('.lb-prev').hidden = !many;
     lb.querySelector('.lb-next').hidden = !many;
@@ -589,7 +584,6 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
       if (g.getAttribute('data-gallery') === name) g.querySelectorAll('img').forEach(function (x) { list.push(x); });
     });
     i = list.indexOf(el);
-    title.textContent = name;
     opener = el;
     lb.hidden = false;
     lb.classList.add('open');
