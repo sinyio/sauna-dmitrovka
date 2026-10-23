@@ -363,7 +363,9 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 /* заголовок отстоит от фото на 16px: у зала промежуток сетки больше, у веранды 10px */
 [data-design="2"] .hall h3 { margin-bottom: calc(16px - clamp(20px, 3vw, 40px)); }
 [data-design="2"] .veranda h3 { margin-bottom: 6px; }
-[data-design="2"] .veranda { gap: 10px; }
+/* фото веранды занимают ту же ширину, что и коллаж зала (левая половина), текст — справа, как у залов */
+[data-design="2"] .veranda { --g: clamp(20px, 3vw, 40px); gap: 10px; grid-template-columns: repeat(3, calc((50% - var(--g) / 2 - 20px) / 3)) 1fr; }
+[data-design="2"] .veranda div { padding-left: calc(var(--g) - 10px); }
 [data-design="2"] .veranda h3 small { font: 500 14px/1 var(--body); letter-spacing: 0; text-transform: none; margin-left: 8px; }
 [data-design="2"] .shots img, [data-design="2"] .veranda img { border-radius: 10px; }
 [data-design="2"] .cap { align-items: baseline; gap: 8px; margin-bottom: 12px; }
@@ -470,6 +472,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   [data-design="2"] .hero { grid-template-columns: 1fr; padding-top: 24px; }
   [data-design="2"] .hero figure { min-height: 280px; }
   [data-design="2"] .inside li, [data-design="2"] .inside li:first-child { padding: 14px 16px; }
+  [data-design="2"] .veranda { grid-template-columns: repeat(3, 1fr); }
   [data-design="2"] .veranda div { padding: 8px 0 0; }
   [data-design="3"] .inside li, [data-design="3"] .inside li:first-child { border-left: 0; border-top: 1px dashed var(--line); }
   [data-design="3"] .hero figcaption { left: 12px; }
