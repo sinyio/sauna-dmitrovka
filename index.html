@@ -302,6 +302,13 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 .designs [data-d="2"] { background: linear-gradient(135deg, #fafaf7 50%, #2f5d50 50%); }
 .designs [data-d="3"] { background: linear-gradient(135deg, #f2e8d5 50%, #c8371f 50%); }
 
+/* ===== Дизайн 1: коллаж зала ровно по высоте блока с текстом и кнопкой ===== */
+@media (min-width: 901px) {
+  [data-design="1"] .hall { align-items: stretch; }
+  [data-design="1"] .shots { contain: size; grid-template-rows: 1fr 1fr; }
+  [data-design="1"] .shots img { aspect-ratio: auto; }
+}
+
 /* ===== Дизайн 2: минимализм — всё нужное сразу, ничего лишнего ===== */
 :root[data-design="2"] {
   --night: #121212;
