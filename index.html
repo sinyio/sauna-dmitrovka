@@ -154,7 +154,7 @@ body, .inside, .contact, .tags li, .btn-ghost { transition: background-color .3s
 
 /* Заявка на бронь */
 .booking { border-top: 1px solid var(--line); padding: clamp(80px, 11vw, 160px) 0; }
-.bk-head { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+.bk-head { display: grid; gap: 60px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
 .bk-head p:last-child { color: var(--dim); max-width: 28em; }
 .bk-form { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
 .bk-form[hidden] { display: none; }
@@ -531,9 +531,9 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
         <fieldset>
           <legend class="f-label">Зал</legend>
           <div class="opts" id="hallOpts">
-            <label class="opt"><input type="radio" name="hall" value="z1"><span><b>Зал 1</b><small>до 10 гостей · от 2&nbsp;200&nbsp;₽/ч</small></span></label>
-            <label class="opt"><input type="radio" name="hall" value="z2"><span><b>Зал 2</b><small>до 15 гостей · от 2&nbsp;200&nbsp;₽/ч</small></span></label>
-            <label class="opt"><input type="radio" name="hall" value="ver"><span><b>Веранда</b><small>летом · от 500&nbsp;₽/ч</small></span></label>
+            <label class="opt"><input type="radio" name="hall" value="z1"><span><b>Зал 1</b><small>до 10 гостей · от 2&nbsp;200&nbsp;₽/&#8288;ч</small></span></label>
+            <label class="opt"><input type="radio" name="hall" value="z2"><span><b>Зал 2</b><small>до 15 гостей · от 2&nbsp;200&nbsp;₽/&#8288;ч</small></span></label>
+            <label class="opt"><input type="radio" name="hall" value="ver"><span><b>Веранда</b><small>летом · от 500&nbsp;₽/&#8288;ч</small></span></label>
           </div>
           <p class="f-err" id="hallErr"></p>
         </fieldset>
