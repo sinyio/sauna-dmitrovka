@@ -319,10 +319,8 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   [data-design="1"] .hero figure::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, transparent 20%, color-mix(in srgb, var(--night) 72%, transparent) 42%, color-mix(in srgb, var(--night) 92%, transparent) 62%, var(--night) 85%); }
   [data-design="1"][data-theme="dark"] .hero figure::after { background: linear-gradient(to bottom, var(--night) 0, color-mix(in srgb, var(--night) 85%, transparent) 10%, transparent 26%, color-mix(in srgb, var(--night) 72%, transparent) 42%, color-mix(in srgb, var(--night) 92%, transparent) 62%, var(--night) 85%); }
   [data-design="1"] .hero figcaption { display: none; }
-  /* светлая тема: часы белые поверх фото, светлый фон начинается сразу под ними — на любой высоте экрана */
-  [data-design="1"][data-theme="light"] .clock { color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, .35); }
-  [data-design="1"][data-theme="light"] .hero figure::after { background: none; }
-  [data-design="1"][data-theme="light"] .hero > div { margin: 0 calc(-1 * var(--pad)) -28px; padding: 0 var(--pad) 28px; background: linear-gradient(to bottom, transparent calc(var(--clock) * .8 - 12px), color-mix(in srgb, var(--night) 92%, transparent) calc(var(--clock) * .8 + 14px), var(--night) calc(var(--clock) * .8 + 50px)); }
+  /* светлая тема: тёмные часы на фото — светлое свечение вокруг цифр, чтобы не сливались */
+  [data-design="1"][data-theme="light"] .clock { text-shadow: 0 0 10px var(--night), 0 0 28px var(--night), 0 0 56px var(--night); }
   [data-design="1"] .hero { --clock: clamp(84px, 25vw, 150px); }
   [data-design="1"] .clock { font-size: var(--clock); }
   [data-design="1"] .now { margin: 16px 0 18px; font-size: 16px; }
