@@ -9,10 +9,10 @@
 (function () {
   var t = null, d = null;
   try { t = localStorage.getItem('theme'); d = localStorage.getItem('design'); } catch (e) {}
-  var q = /[?&]d=([12])/.exec(location.search);
+  var q = /[?&]d=([123])/.exec(location.search);
   if (q) d = q[1];
   if (t !== 'light') t = 'dark';
-  if (d !== '2') d = '1';
+  if (d !== '2' && d !== '3') d = '1';
   document.documentElement.setAttribute('data-theme', t);
   document.documentElement.setAttribute('data-design', d);
 })();
@@ -300,6 +300,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 .designs button[aria-pressed="true"] { outline: 2px solid var(--steam); outline-offset: 2px; }
 .designs [data-d="1"] { background: linear-gradient(135deg, #0c1814 50%, #d9a441 50%); }
 .designs [data-d="2"] { background: linear-gradient(135deg, #fafaf7 50%, #2f5d50 50%); }
+.designs [data-d="3"] { background: linear-gradient(135deg, #fafaf7 50%, #d9a441 50%); }
 
 /* ===== Дизайн 1: коллаж зала ровно по высоте блока с текстом и кнопкой ===== */
 [data-design="1"] .hero { min-height: calc(100svh - 65px); padding-top: 48px; }
@@ -351,7 +352,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   --line: rgba(21, 21, 21, .12);
   --accent: #2f5d50;
 }
-[data-design="2"] body { font-size: 16px; }
+:is([data-design="2"], [data-design="3"]) body { font-size: 16px; }
 /* Шапка общая для обоих дизайнов: липкая, с телефоном-кнопкой */
 :root .top { position: sticky; top: 0; padding: 12px var(--pad); background: color-mix(in srgb, var(--night) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 :root .brand { font-weight: 700; font-size: 17px; }
@@ -362,69 +363,78 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 /* в первом дизайне всё круглое */
 [data-design="1"] .top .tel { border-radius: 999px; padding: 0 18px; }
 [data-design="1"] .theme { border-radius: 50%; }
-[data-design="2"] .btn { min-height: 52px; padding: 0 24px; border-radius: 10px; font-weight: 600; }
-[data-design="2"] h2 { font: 600 clamp(30px, 3.6vw, 44px)/1.1 var(--display); letter-spacing: -.025em; }
-[data-design="2"] .kicker { font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; margin-bottom: 10px; }
 
-[data-design="2"] .hero { min-height: 0; grid-template-columns: 1fr 1fr; align-items: center; padding: clamp(40px, 6vw, 80px) var(--pad); max-width: 1280px; }
-[data-design="2"] .clock { display: none; }
-[data-design="2"] .now { display: inline-flex; align-items: center; margin: 0 0 22px; padding: 6px 14px 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; font-weight: 500; }
-[data-design="2"] .now .dot { margin-top: 0; width: 8px; height: 8px; box-shadow: 0 0 0 4px rgba(95, 211, 141, .18); }
-[data-design="2"] .hero h1 { font: 700 clamp(34px, 4.4vw, 58px)/1.05 var(--display); letter-spacing: -.035em; }
-[data-design="2"] .hero h1 span { display: block; margin-top: 16px; font: 400 clamp(17px, 1.5vw, 20px)/1.5 var(--body); letter-spacing: 0; color: var(--dim); }
-[data-design="2"] .hero .actions { margin-top: 28px; }
-[data-design="2"] .hero figure { min-height: 460px; }
-[data-design="2"] .hero figure img { border-radius: 16px; filter: none; }
-[data-design="2"] .hero figcaption { left: 16px; bottom: 16px; border-radius: 8px; background: var(--night); color: var(--steam); }
+/* ===== Дизайн 3: расположение как во втором, цвета и округлость первого ===== */
+:root[data-design="3"] { --display: 'Onest', system-ui, sans-serif; --body: 'Onest', system-ui, sans-serif; }
+:root[data-design="3"] :is(.btn, .tags li, .top .tel) { border-radius: 999px; }
+:root[data-design="3"] .theme { border-radius: 50%; }
+:root[data-design="3"] .hero figure img { border-radius: 300px 300px 8px 8px; filter: saturate(.85) contrast(1.05); }
+:root[data-design="3"] .hero figcaption { background: var(--gold); color: var(--on-gold); border-radius: 4px; }
+:root[data-design="3"] :is(.shots img, .veranda img) { border-radius: 6px; }
+:root[data-design="3"] .cap b { color: var(--accent); }
+:is([data-design="2"], [data-design="3"]) .btn { min-height: 52px; padding: 0 24px; border-radius: 10px; font-weight: 600; }
+:is([data-design="2"], [data-design="3"]) h2 { font: 600 clamp(30px, 3.6vw, 44px)/1.1 var(--display); letter-spacing: -.025em; }
+:is([data-design="2"], [data-design="3"]) .kicker { font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; margin-bottom: 10px; }
 
-[data-design="2"] .inside { border: 0; }
-[data-design="2"] .inside ul { gap: 8px; }
-[data-design="2"] .inside li, [data-design="2"] .inside li:first-child { padding: 18px 20px; border: 0; border-radius: 12px; background: var(--deep); }
-[data-design="2"] .inside b { font: 600 19px/1.2 var(--display); color: var(--steam); margin-bottom: 2px; }
+:is([data-design="2"], [data-design="3"]) .hero { min-height: 0; grid-template-columns: 1fr 1fr; align-items: center; padding: clamp(40px, 6vw, 80px) var(--pad); max-width: 1280px; }
+:is([data-design="2"], [data-design="3"]) .clock { display: none; }
+:is([data-design="2"], [data-design="3"]) .now { display: inline-flex; align-items: center; margin: 0 0 22px; padding: 6px 14px 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; font-weight: 500; }
+:is([data-design="2"], [data-design="3"]) .now .dot { margin-top: 0; width: 8px; height: 8px; box-shadow: 0 0 0 4px rgba(95, 211, 141, .18); }
+:is([data-design="2"], [data-design="3"]) .hero h1 { font: 700 clamp(34px, 4.4vw, 58px)/1.05 var(--display); letter-spacing: -.035em; }
+:is([data-design="2"], [data-design="3"]) .hero h1 span { display: block; margin-top: 16px; font: 400 clamp(17px, 1.5vw, 20px)/1.5 var(--body); letter-spacing: 0; color: var(--dim); }
+:is([data-design="2"], [data-design="3"]) .hero .actions { margin-top: 28px; }
+:is([data-design="2"], [data-design="3"]) .hero figure { min-height: 460px; }
+:is([data-design="2"], [data-design="3"]) .hero figure img { border-radius: 16px; filter: none; }
+:is([data-design="2"], [data-design="3"]) .hero figcaption { left: 16px; bottom: 16px; border-radius: 8px; background: var(--night); color: var(--steam); }
 
-[data-design="2"] .halls { padding-block: clamp(56px, 7vw, 96px); }
-[data-design="2"] .hall, [data-design="2"] .veranda { margin-top: clamp(48px, 6vw, 80px); gap: clamp(20px, 3vw, 40px); }
-[data-design="2"] .hall:nth-child(odd) .shots { order: 0; }
-[data-design="2"] .hall h3, [data-design="2"] .veranda h3 { margin: 0; font: 600 26px/1.2 var(--display); letter-spacing: -.02em; }
+:is([data-design="2"], [data-design="3"]) .inside { border: 0; }
+:is([data-design="2"], [data-design="3"]) .inside ul { gap: 8px; }
+:is([data-design="2"], [data-design="3"]) .inside li, :is([data-design="2"], [data-design="3"]) .inside li:first-child { padding: 18px 20px; border: 0; border-radius: 12px; background: var(--deep); }
+:is([data-design="2"], [data-design="3"]) .inside b { font: 600 19px/1.2 var(--display); color: var(--steam); margin-bottom: 2px; }
+
+:is([data-design="2"], [data-design="3"]) .halls { padding-block: clamp(56px, 7vw, 96px); }
+:is([data-design="2"], [data-design="3"]) .hall, :is([data-design="2"], [data-design="3"]) .veranda { margin-top: clamp(48px, 6vw, 80px); gap: clamp(20px, 3vw, 40px); }
+:is([data-design="2"], [data-design="3"]) .hall:nth-child(odd) .shots { order: 0; }
+:is([data-design="2"], [data-design="3"]) .hall h3, :is([data-design="2"], [data-design="3"]) .veranda h3 { margin: 0; font: 600 26px/1.2 var(--display); letter-spacing: -.02em; }
 /* заголовок отстоит от фото на 16px: у зала промежуток сетки больше, у веранды 10px */
-[data-design="2"] .hall h3 { margin-bottom: calc(16px - clamp(20px, 3vw, 40px)); }
-[data-design="2"] .veranda h3 { margin-bottom: 6px; }
+:is([data-design="2"], [data-design="3"]) .hall h3 { margin-bottom: calc(16px - clamp(20px, 3vw, 40px)); }
+:is([data-design="2"], [data-design="3"]) .veranda h3 { margin-bottom: 6px; }
 /* фото веранды занимают ту же ширину, что и коллаж зала (левая половина), текст — справа, как у залов */
-[data-design="2"] .veranda { --g: clamp(20px, 3vw, 40px); gap: 10px; grid-template-columns: repeat(3, calc((50% - var(--g) / 2 - 20px) / 3)) 1fr; }
-[data-design="2"] .veranda div { padding-left: calc(var(--g) - 10px); }
-[data-design="2"] .veranda h3 small { font: 500 14px/1 var(--body); letter-spacing: 0; text-transform: none; margin-left: 8px; }
-[data-design="2"] .shots img, [data-design="2"] .veranda img { border-radius: 10px; }
-[data-design="2"] .cap { align-items: baseline; gap: 8px; margin-bottom: 12px; }
-[data-design="2"] .cap b { font: 700 40px/1 var(--display); letter-spacing: -.03em; color: var(--steam); }
-[data-design="2"] .cap span br { display: none; }
-[data-design="2"] .price { margin-top: 16px; font-size: 18px; }
-[data-design="2"] .tags li { border-radius: 8px; padding: 5px 12px; background: var(--deep); border-color: transparent; }
-[data-design="2"] .hall-book { margin-top: 20px; }
+:is([data-design="2"], [data-design="3"]) .veranda { --g: clamp(20px, 3vw, 40px); gap: 10px; grid-template-columns: repeat(3, calc((50% - var(--g) / 2 - 20px) / 3)) 1fr; }
+:is([data-design="2"], [data-design="3"]) .veranda div { padding-left: calc(var(--g) - 10px); }
+:is([data-design="2"], [data-design="3"]) .veranda h3 small { font: 500 14px/1 var(--body); letter-spacing: 0; text-transform: none; margin-left: 8px; }
+:is([data-design="2"], [data-design="3"]) .shots img, :is([data-design="2"], [data-design="3"]) .veranda img { border-radius: 10px; }
+:is([data-design="2"], [data-design="3"]) .cap { align-items: baseline; gap: 8px; margin-bottom: 12px; }
+:is([data-design="2"], [data-design="3"]) .cap b { font: 700 40px/1 var(--display); letter-spacing: -.03em; color: var(--steam); }
+:is([data-design="2"], [data-design="3"]) .cap span br { display: none; }
+:is([data-design="2"], [data-design="3"]) .price { margin-top: 16px; font-size: 18px; }
+:is([data-design="2"], [data-design="3"]) .tags li { border-radius: 8px; padding: 5px 12px; background: var(--deep); border-color: transparent; }
+:is([data-design="2"], [data-design="3"]) .hall-book { margin-top: 20px; }
 
-[data-design="2"] .own { padding: 0; background: var(--deep); color: inherit; }
-[data-design="2"] .own .wrap { align-items: center; padding-block: clamp(32px, 4vw, 48px); gap: 32px; }
-[data-design="2"] .own h2 { font-size: clamp(26px, 2.6vw, 34px); }
-[data-design="2"] .own p { font-size: 17px; color: var(--dim); }
+:is([data-design="2"], [data-design="3"]) .own { padding: 0; background: var(--deep); color: inherit; }
+:is([data-design="2"], [data-design="3"]) .own .wrap { align-items: center; padding-block: clamp(32px, 4vw, 48px); gap: 32px; }
+:is([data-design="2"], [data-design="3"]) .own h2 { font-size: clamp(26px, 2.6vw, 34px); }
+:is([data-design="2"], [data-design="3"]) .own p { font-size: 17px; color: var(--dim); }
 
-[data-design="2"] .reviews, [data-design="2"] .booking { padding-block: clamp(56px, 7vw, 96px); }
-[data-design="2"] .quotes { margin-top: 24px; gap: 12px; }
-[data-design="2"] .quotes figure { padding: 22px; border: 0; border-radius: 14px; background: var(--deep); }
-[data-design="2"] .quotes figcaption { color: var(--dim); font-weight: 600; }
-[data-design="2"] .bk-head { margin-bottom: 32px; }
-[data-design="2"] .opt span, [data-design="2"] .cal, [data-design="2"] .bk-sum { border-radius: 12px; }
-[data-design="2"] .contact { padding: clamp(56px, 7vw, 96px) 0 110px; }
-[data-design="2"] .phones a { font: 600 clamp(26px, 2.8vw, 36px)/1.4 var(--display); letter-spacing: -.02em; }
-[data-design="2"] .contact dt { letter-spacing: 0; text-transform: none; font-size: 15px; font-weight: 600; color: var(--dim); padding-top: 0; }
-[data-design="2"] .map { border-radius: 14px; }
+:is([data-design="2"], [data-design="3"]) .reviews, :is([data-design="2"], [data-design="3"]) .booking { padding-block: clamp(56px, 7vw, 96px); }
+:is([data-design="2"], [data-design="3"]) .quotes { margin-top: 24px; gap: 12px; }
+:is([data-design="2"], [data-design="3"]) .quotes figure { padding: 22px; border: 0; border-radius: 14px; background: var(--deep); }
+:is([data-design="2"], [data-design="3"]) .quotes figcaption { color: var(--dim); font-weight: 600; }
+:is([data-design="2"], [data-design="3"]) .bk-head { margin-bottom: 32px; }
+:is([data-design="2"], [data-design="3"]) .opt span, :is([data-design="2"], [data-design="3"]) .cal, :is([data-design="2"], [data-design="3"]) .bk-sum { border-radius: 12px; }
+:is([data-design="2"], [data-design="3"]) .contact { padding: clamp(56px, 7vw, 96px) 0 110px; }
+:is([data-design="2"], [data-design="3"]) .phones a { font: 600 clamp(26px, 2.8vw, 36px)/1.4 var(--display); letter-spacing: -.02em; }
+:is([data-design="2"], [data-design="3"]) .contact dt { letter-spacing: 0; text-transform: none; font-size: 15px; font-weight: 600; color: var(--dim); padding-top: 0; }
+:is([data-design="2"], [data-design="3"]) .map { border-radius: 14px; }
 
 @media (max-width: 900px) {
   /* на телефоне кружки справа под шапкой, чтобы не закрывать кнопки внизу первого экрана */
   .designs { left: auto; right: 10px; bottom: auto; top: 80px; flex-direction: column; padding: 6px; }
-  [data-design="2"] .hero { grid-template-columns: 1fr; padding-top: 24px; }
-  [data-design="2"] .hero figure { min-height: 280px; }
-  [data-design="2"] .inside li, [data-design="2"] .inside li:first-child { padding: 14px 16px; }
-  [data-design="2"] .veranda { grid-template-columns: repeat(3, 1fr); }
-  [data-design="2"] .veranda div { padding: 8px 0 0; }
+  :is([data-design="2"], [data-design="3"]) .hero { grid-template-columns: 1fr; padding-top: 24px; }
+  :is([data-design="2"], [data-design="3"]) .hero figure { min-height: 280px; }
+  :is([data-design="2"], [data-design="3"]) .inside li, :is([data-design="2"], [data-design="3"]) .inside li:first-child { padding: 14px 16px; }
+  :is([data-design="2"], [data-design="3"]) .veranda { grid-template-columns: repeat(3, 1fr); }
+  :is([data-design="2"], [data-design="3"]) .veranda div { padding: 8px 0 0; }
 }
 @media (max-width: 520px) {
   :root .top { gap: 10px; }
@@ -674,6 +684,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 <div class="designs" role="group" aria-label="Вариант дизайна">
   <button type="button" data-d="1" aria-label="Дизайн 1: ночь и золото"></button>
   <button type="button" data-d="2" aria-label="Дизайн 2: минимализм"></button>
+  <button type="button" data-d="3" aria-label="Дизайн 3: минимализм в цветах первого"></button>
 </div>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото" hidden>
