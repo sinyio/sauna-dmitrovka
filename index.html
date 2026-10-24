@@ -302,6 +302,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 .designs [data-d="2"] { background: linear-gradient(135deg, #fafaf7 50%, #2f5d50 50%); }
 
 /* ===== Дизайн 1: коллаж зала ровно по высоте блока с текстом и кнопкой ===== */
+[data-design="1"] .hero { min-height: calc(100svh - 65px); padding-top: 48px; }
 @media (min-width: 901px) {
   [data-design="1"] .hall { align-items: stretch; }
   [data-design="1"] .shots { contain: size; grid-template-rows: 1fr 1fr; }
@@ -310,7 +311,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 
 /* Дизайн 1 на телефоне: фото — фон первого экрана, часы и текст поверх, всё в один экран */
 @media (max-width: 900px) {
-  [data-design="1"] .hero { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 100svh; padding: 110px var(--pad) 28px; overflow: hidden; }
+  [data-design="1"] .hero { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: calc(100svh - 65px); padding: 40px var(--pad) 28px; overflow: hidden; }
   [data-design="1"] .hero > div { position: relative; z-index: 1; }
   [data-design="1"] .hero figure { position: absolute; inset: 0; min-height: 0; }
   [data-design="1"] .hero figure img { border-radius: 0; filter: saturate(.8) brightness(.9); }
@@ -350,12 +351,13 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   --accent: #2f5d50;
 }
 [data-design="2"] body { font-size: 16px; }
-[data-design="2"] .top { position: sticky; top: 0; padding: 12px var(--pad); background: color-mix(in srgb, var(--night) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-[data-design="2"] .brand { font-weight: 700; font-size: 17px; }
-[data-design="2"] .top nav a { opacity: .7; font-weight: 500; }
-[data-design="2"] .top .tel { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 8px; background: var(--gold); color: var(--on-gold); font-size: 15px; }
-[data-design="2"] .top .tel:hover { background: var(--gold-hover); }
-[data-design="2"] .theme { width: 40px; height: 40px; border-radius: 8px; }
+/* Шапка общая для обоих дизайнов: липкая, с телефоном-кнопкой */
+:root .top { position: sticky; top: 0; padding: 12px var(--pad); background: color-mix(in srgb, var(--night) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+:root .brand { font-weight: 700; font-size: 17px; }
+:root .top nav a { opacity: .7; font-weight: 500; }
+:root .top .tel { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 8px; background: var(--gold); color: var(--on-gold); font-size: 15px; }
+:root .top .tel:hover { background: var(--gold-hover); }
+:root .theme { width: 40px; height: 40px; border-radius: 8px; }
 [data-design="2"] .btn { min-height: 52px; padding: 0 24px; border-radius: 10px; font-weight: 600; }
 [data-design="2"] h2 { font: 600 clamp(30px, 3.6vw, 44px)/1.1 var(--display); letter-spacing: -.025em; }
 [data-design="2"] .kicker { font-size: 14px; font-weight: 600; letter-spacing: 0; text-transform: none; margin-bottom: 10px; }
@@ -413,7 +415,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 
 @media (max-width: 900px) {
   /* на телефоне кружки справа под шапкой, чтобы не закрывать кнопки внизу первого экрана */
-  .designs { left: auto; right: 10px; bottom: auto; top: 96px; flex-direction: column; padding: 6px; }
+  .designs { left: auto; right: 10px; bottom: auto; top: 80px; flex-direction: column; padding: 6px; }
   [data-design="2"] .hero { grid-template-columns: 1fr; padding-top: 24px; }
   [data-design="2"] .hero figure { min-height: 280px; }
   [data-design="2"] .inside li, [data-design="2"] .inside li:first-child { padding: 14px 16px; }
@@ -421,10 +423,10 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   [data-design="2"] .veranda div { padding: 8px 0 0; }
 }
 @media (max-width: 520px) {
-  [data-design="2"] .top { gap: 10px; }
-  [data-design="2"] .brand { font-size: 14px; white-space: nowrap; }
-  [data-design="2"] .top .tel { display: inline-flex; margin-left: auto; padding: 0 10px; font-size: 13px; white-space: nowrap; }
-  [data-design="2"] .theme { margin-left: 0; }
+  :root .top { gap: 10px; }
+  :root .brand { font-size: 14px; white-space: nowrap; }
+  :root .top .tel { display: inline-flex; margin-left: auto; padding: 0 10px; font-size: 13px; white-space: nowrap; }
+  :root .theme { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .clock .colon { animation: none; } html { scroll-behavior: auto; } }
 </style>
