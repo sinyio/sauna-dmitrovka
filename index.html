@@ -320,8 +320,9 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   [data-design="1"][data-theme="dark"] .hero figure::after { background: linear-gradient(to bottom, var(--night) 0, color-mix(in srgb, var(--night) 85%, transparent) 10%, transparent 26%, color-mix(in srgb, var(--night) 72%, transparent) 42%, color-mix(in srgb, var(--night) 92%, transparent) 62%, var(--night) 85%); }
   [data-design="1"] .hero figcaption { display: none; }
   /* светлая тема: за часами плотная светлая подложка, фото там бледнее; привязана к часам, а не к высоте экрана */
-  [data-design="1"][data-theme="light"] .hero > div { margin: 0 calc(-1 * var(--pad)) -28px; padding: 0 var(--pad) 28px; background: linear-gradient(to bottom, color-mix(in srgb, var(--night) 72%, transparent) 0, color-mix(in srgb, var(--night) 86%, transparent) calc(var(--clock) * .8), var(--night) calc(var(--clock) * .8 + 40px)); }
-  [data-design="1"][data-theme="light"] .hero > div::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 64px; pointer-events: none; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--night) 72%, transparent)); }
+  [data-design="1"][data-theme="light"] .hero > div { margin: 0 calc(-1 * var(--pad)) -28px; padding: 0 var(--pad) 28px; background: linear-gradient(to bottom, color-mix(in srgb, var(--night) 50%, transparent) 0, color-mix(in srgb, var(--night) 58%, transparent) calc(var(--clock) * .8), color-mix(in srgb, var(--night) 82%, transparent) calc(var(--clock) * .8 + 90px), var(--night) calc(var(--clock) * .8 + 170px)); }
+  [data-design="1"][data-theme="light"] .hero figure::after { background: linear-gradient(to bottom, transparent 30%, color-mix(in srgb, var(--night) 30%, transparent) 55%, color-mix(in srgb, var(--night) 60%, transparent) 80%, color-mix(in srgb, var(--night) 80%, transparent) 100%); }
+  [data-design="1"][data-theme="light"] .hero > div::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 40px; pointer-events: none; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--night) 50%, transparent)); }
   [data-design="1"] .hero { --clock: clamp(84px, 25vw, 150px); }
   [data-design="1"] .clock { font-size: var(--clock); }
   [data-design="1"] .now { margin: 16px 0 18px; font-size: 16px; }
