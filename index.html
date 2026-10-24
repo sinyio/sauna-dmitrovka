@@ -310,7 +310,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 
 /* Дизайн 1 на телефоне: фото — фон первого экрана, часы и текст поверх, всё в один экран */
 @media (max-width: 900px) {
-  [data-design="1"] .hero { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 100svh; padding: 110px var(--pad) 96px; overflow: hidden; }
+  [data-design="1"] .hero { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 100svh; padding: 110px var(--pad) 28px; overflow: hidden; }
   [data-design="1"] .hero > div { position: relative; z-index: 1; }
   [data-design="1"] .hero figure { position: absolute; inset: 0; min-height: 0; }
   [data-design="1"] .hero figure img { border-radius: 0; filter: saturate(.8) brightness(.9); }
@@ -412,6 +412,8 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 [data-design="2"] .map { border-radius: 14px; }
 
 @media (max-width: 900px) {
+  /* на телефоне кружки справа под шапкой, чтобы не закрывать кнопки внизу первого экрана */
+  .designs { left: auto; right: 10px; bottom: auto; top: 96px; flex-direction: column; padding: 6px; }
   [data-design="2"] .hero { grid-template-columns: 1fr; padding-top: 24px; }
   [data-design="2"] .hero figure { min-height: 280px; }
   [data-design="2"] .inside li, [data-design="2"] .inside li:first-child { padding: 14px 16px; }
