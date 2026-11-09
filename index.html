@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-design="3">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <script>
-// Тема и вариант дизайна до отрисовки, чтобы не мигало: сохранённый выбор, иначе тёмная и первый
+// Тема до отрисовки: сохранённый выбор, иначе тёмная
 (function () {
-  var t = null, d = null;
-  try { t = localStorage.getItem('theme'); d = localStorage.getItem('design'); } catch (e) {}
-  var q = /[?&]d=([123])/.exec(location.search);
-  if (q) d = q[1];
-  if (t !== 'light') t = 'dark';
-  if (d !== '2' && d !== '3') d = '1';
-  document.documentElement.setAttribute('data-theme', t);
-  document.documentElement.setAttribute('data-design', d);
+  var t = null;
+  try { t = localStorage.getItem('theme'); } catch (e) {}
+  document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
 })();
 </script>
 <title>Сауна на Дмитровке — открыто круглосуточно</title>
@@ -295,6 +290,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 }
 /* ===== Переключатель вариантов дизайна ===== */
 .designs { position: fixed; left: 16px; bottom: 16px; z-index: 40; display: flex; gap: 8px; padding: 8px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--night) 82%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.designs[hidden] { display: none; }
 .designs button { width: 24px; height: 24px; padding: 0; border: 1px solid rgba(128, 128, 128, .45); border-radius: 50%; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .15s; }
 .designs button:hover { transform: scale(1.12); }
 .designs button[aria-pressed="true"] { outline: 2px solid var(--steam); outline-offset: 2px; }
@@ -373,7 +369,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 :root[data-design="3"] { --display: 'Onest', system-ui, sans-serif; --body: 'Onest', system-ui, sans-serif; }
 :root[data-design="3"] :is(.btn, .tags li, .top .tel) { border-radius: 999px; }
 :root[data-design="3"] .theme { border-radius: 50%; }
-:root[data-design="3"] .hero figure img { border-radius: 300px 300px 8px 8px; filter: saturate(.85) contrast(1.05); }
+:root[data-design="3"] .hero figure img { filter: saturate(.85) contrast(1.05); }
 :root[data-design="3"] .hero figcaption { background: var(--gold); color: var(--on-gold); border-radius: 4px; }
 :root[data-design="3"] :is(.shots img, .veranda img) { border-radius: 6px; }
 :root[data-design="3"] .cap b { color: var(--accent); }
@@ -686,7 +682,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
   </div>
 </footer>
 
-<div class="designs" role="group" aria-label="Вариант дизайна">
+<div class="designs" role="group" aria-label="Вариант дизайна" hidden>
   <button type="button" data-d="1" aria-label="Дизайн 1: ночь и золото"></button>
   <button type="button" data-d="2" aria-label="Дизайн 2: минимализм"></button>
   <button type="button" data-d="3" aria-label="Дизайн 3: минимализм в цветах первого"></button>
@@ -722,7 +718,7 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
 // Переключатель вариантов дизайна
 (function () {
   var root = document.documentElement;
-  var btns = document.querySelectorAll('.designs button');
+  var btns = document.querySelectorAll('.designs:not([hidden]) button');
   function mark() {
     btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-d') === root.getAttribute('data-design')); b.title = b.getAttribute('aria-label'); });
   }
@@ -731,7 +727,6 @@ textarea.f-input { min-height: 96px; padding: 14px 16px; resize: vertical; }
     b.addEventListener('click', function () {
       var d = b.getAttribute('data-d');
       root.setAttribute('data-design', d);
-      try { localStorage.setItem('design', d); } catch (e) {}
       mark();
     });
   });
